@@ -5,17 +5,13 @@
 """
 import uuid
 from datetime import datetime
-
-
-
+import models
 
 class BaseModel:
-   
     """
 
     """
     def __init__(self, *args, **kwargs):
-        from models.__init__ import storage
         """Class constructor"""
         if len(kwargs) != 0:
             for key, value in kwargs.items():
@@ -30,7 +26,7 @@ class BaseModel:
             self.id = str(uuid.uuid4()) #Getter y Setter???
             self.created_at = datetime.now() #Getter y Setter???
             self.updated_at  = datetime.now() #Getter y Setter???
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """Represents the class objects as a string"""
@@ -41,12 +37,11 @@ class BaseModel:
         return msg
 
     def save(self):
-        from models.__init__ import storage
         """ Updates the public instance attribute updated_at
             with the current datetime """
         self.updated_at  = datetime.now() #Getter y Setter???
-        storage.save()
-    
+        models.storage.save()
+
     def to_dict(self):
         """ returns a dictionary containing all keys/values of
             __dict__ of the instance """
