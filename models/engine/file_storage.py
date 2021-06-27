@@ -14,9 +14,11 @@ class FileStorage:
     __objects = { } # guardo el valor de la serializacion
 
     def all(self):
+        """"""
         return(FileStorage.__objects)
 
     def new(self,obj):
+        """"""
         FileStorage.__objects[obj.__class__.__name__ + "." + obj.id] = obj
 
 

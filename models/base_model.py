@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """
 	Module: models.base_model.py
-	BaseModel that defines all common attributes/methods for other classes
 """
 import uuid
 from datetime import datetime
 import models
 
+
 class BaseModel:
     """
-
+        BaseModel that defines all common attributes/methods for other classes
     """
     def __init__(self, *args, **kwargs):
         """Class constructor"""
