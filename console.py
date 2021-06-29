@@ -1,74 +1,170 @@
 #!/usr/bin/python3
 """Module: console.py"""
 import cmd
-import json
-from os import name
+import models
 from models.base_model import BaseModel
-import models 
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """"""
+    """ command line interpreter"""
 
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
 
     def do_create(self, new_obj):
-        """asdasdasd"""
-       
+        """ Creates a new instance of different classes,
+            saves it (to the JSON file) and prints the id\n """
         if not new_obj:
             print("** class name missing **")
             return
-        if new_obj == "BaseModel":
-            obj = BaseModel()
-            obj.save()
-            print(obj.id)
-            return
-        else:
+        classes = ["BaseModel", "User", "State",
+                    "City", "Amenity", "Place", "Review"]
+        if new_obj not in classes:
             print("** class doesn't exist **")
-       
+            return
+        for _class in classes:
+            if _class == new_obj:
+                obj = eval(_class + "()")
+        obj.save()
+        print(obj.id)
+
     def do_show (self, args):
-        args = args.split()
-        
+        """ Prints the string representation of an instance
+            based on the class name and id\n """
         if not args:
             print("** class name missing **")
             return
+        args = args.split()
         name_class = args[0]
-        
-        if name_class not in ["BaseModel"]:
+        if name_class not in ["BaseModel", "User", "State",
+                            "City", "Amenity", "Place", "Review "]:
             print("** class doesn't exist **")
             return
         if len(args) > 1:
             obj_id = args[1]
-        else:  
+        else:
             print("** instance id missing **")
-            return  
+            return
         all_objs = models.storage.all()
-        print(obj_id)
-        for key,value in all_objs.items():
-            print(value)
+        for value in all_objs.values():
             if obj_id == value.id:
-                print("primer if")
-                print(value.__class__.__name__)
                 if name_class == value.__class__.__name__:
                     print(value)
                     return
-        
         print("** no instance found **")
-    
-    #def destroy(self, )    
+
+    def do_destroy(self, args):
+        """ Deletes an instance based on the class name and id\n """
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split()
+        name_class = args[0]
+        if name_class not in ["BaseModel", "User", "State",
+                            "City", "Amenity", "Place", "Review "]:
+            print("** class doesn't exist **")
+            return
+        if len(args) > 1:
+            obj_id = args[1]
+        else:
+            print("** instance id missing **")
+            return
+        all_objs = models.storage.all()
+        for key, value in all_objs.items():
+            if obj_id == value.id:
+                if name_class == value.__class__.__name__:
+                    del all_objs[key]
+                    models.storage.save()
+                    return
+        print("** no instance found **")
+
+    def do_all(self, args):
+        """ Prints all string representation of all instances
+            based or not on the class name\n"""
+        all_objs = models.storage.all()
+        all_list = []
+        if not args:
+            for obj in all_objs.values():
+                all_list.append(str(obj))
+            print(all_list)
+            return
+        else:
+            if args not in ["BaseModel", "User", "State",
+                            "City", "Amenity", "Place", "Review "]:
+                print("** class doesn't exist **")
+                return
+            for obj in all_objs.values():
+                if obj.__class__.__name__ == args:
+                    all_list.append(str(obj))
+            print(all_list)
+
+    def do_update(self, args):
+        """ Updates an instance based on the class name and id
+            by adding or updating attribute
+            (save the change into the JSON file)
+            Usage:
+            update <class name> <id> <attribute name> "<attribute value>\n"""
+        if not args:
+            print("** class name missing **")
+            return
+        args = args.split()
+        name_class = args[0]
+        if name_class not in ["BaseModel", "User", "State",
+                            "City", "Amenity", "Place", "Review "]:
+            print("** class doesn't exist **")
+            return
+        if len(args) > 1:
+            obj_id = args[1]
+        else:
+            print("** instance id missing **")
+            return
+        all_objs = models.storage.all()
+        found = False
+        for key, value in all_objs.items():
+            if obj_id == value.id:
+                if name_class == value.__class__.__name__:
+                    found = True
+                    if len(args) > 2:
+                        if len(args) > 3:
+                            break
+                        else:
+                            print("** value missing **")
+                            return
+                    else:
+                        print("** attribute name missing **")
+                        return
+        if not found:
+            print("** no instance found **")
+            return
+        attr_name = args[2]
+        attr_value = args[3].replace('"', '')
+        if attr_value.isdigit():
+            attr_value = int(attr_value)
+        else:
+            try:
+                attr_value = float(attr_value)
+            except:
+                pass
+        all_objs[key].__dict__[attr_name] = attr_value
+        models.storage.save()
+
     def do_quit(self, line):
-        """Quit command to exit the program\n"""
+        """ Quit command to exit the program\n """
         return True
 
     def do_EOF(self, line):
-        """Quit command to exit the program\n"""
+        """ Quit command to exit the program\n """
         print()
         return True
 
     def emptyline(self):
         """"""
         return
-   
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
