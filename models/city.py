@@ -12,5 +12,5 @@ class City(BaseModel):
     name = ""
 
     def __init__(self, *args, **kwargs):
-        """Class constructor"""
+        """Class constructor for City"""
         super().__init__(*args, **kwargs)

@@ -14,5 +14,5 @@ class Review(BaseModel):
     text = ""
 
     def __init__(self, *args, **kwargs):
-        """Class constructor"""
+        """Class constructor for Review"""
         super().__init__(*args, **kwargs)
