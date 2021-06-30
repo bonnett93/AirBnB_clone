@@ -18,7 +18,7 @@ class TestReview(unittest.TestCase):
         self.obj = Review()
         self.obj2 = Review()
 
-    def test_AmenityInstance(self):
+    def test_ReviewInstance(self):
         '''Check instance creation and attributes'''
         # Check id
         self.assertIs(type(self.obj.id), str)
@@ -100,7 +100,7 @@ class TestReview(unittest.TestCase):
             self.obj.save({'id': 123, 'created_at': datetime.now()})
             self.obj.save('Ranmod value')
 
-    def test_createamenety_from_dictionary_as_kwargs(self):
+    def test_createReview_from_dictionary_as_kwargs(self):
         """ Test for create a obj from a dictionary """
         id = str(uuid4())
         now = datetime.now().isoformat()
@@ -117,7 +117,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(now, obj1.created_at.isoformat())
         self.assertEqual(now, obj1.updated_at.isoformat())
 
-    def test_createamenety_from_dictionary_as_kwargs_empty(self):
+    def test_creatReview_from_dictionary_as_kwargs_empty(self):
         """ Test for create a obj from a empty dictionary """
         empty_dict = dict()
         obj1 = Review(**empty_dict)
@@ -126,7 +126,7 @@ class TestReview(unittest.TestCase):
         self.assertIs(type(obj1.created_at), datetime)
         self.assertIs(type(obj1.updated_at), datetime)
 
-    def test_createamenety_from_dictionary_as_kwargs_diff_fileds(self):
+    def test_createReview_from_dictionary_as_kwargs_diff_fileds(self):
         """ Test for create a obj from a dictionary without all fields"""
         my_dict = {
             'name': 'Jhon Smith',
@@ -145,7 +145,7 @@ class TestReview(unittest.TestCase):
         with self.assertRaisesRegex(AttributeError, regex):
             obj.updated_at
 
-    def test_createamenity_from_dictionary_as_kwargs_wrong_format(self):
+    def test_createReview_from_dictionary_as_kwargs_wrong_format(self):
         """ Test for create a obj with wrong format """
         id = uuid4()
         now = datetime.now()
@@ -159,7 +159,7 @@ class TestReview(unittest.TestCase):
         with self.assertRaisesRegex(TypeError, regex):
             Review(**my_dict)
 
-    def test_createamenety_from_args(self):
+    def test_createReview_from_args(self):
         """ Test for create a obj from a list """
         args = [True, 'Random', 34.2]
         obj = Review(*args)
