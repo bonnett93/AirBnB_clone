@@ -2,6 +2,7 @@
 """Module: console.py"""
 import cmd
 import models
+import re
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -19,6 +20,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, new_obj):
         """ Creates a new instance of different classes,
             saves it (to the JSON file) and prints the id\n """
+        new_obj.split()
         if not new_obj:
             print("** class name missing **")
             return
@@ -152,6 +154,33 @@ class HBNBCommand(cmd.Cmd):
                 pass
         all_objs[key].__dict__[attr_name] = attr_value
         models.storage.save()
+
+    def do_count(self, arg):
+        all_objs = models.storage.all()
+        count = 0
+        for key in all_objs:
+            if arg in key:
+                count += 1
+        print(count)
+
+    def precmd(self, line):
+        """Hook method executed just before the
+            command line line is interpreted.
+            Modify to allow comands in the way arg.command()"""
+        if "." in line:
+            # arg_n = re.search('\((.+?)\)', line[1])
+            line = line.replace("(", " ")
+            line = line.replace(")", " ")
+            line = line.replace(".", " ")
+            line = line.replace(",", "")
+            line = line.split()
+            command = line[1]
+            args = line[0]
+            for index in range(2, len(line)):
+                args += " " + line[index].replace('"', '')
+            return command + " " + args
+        else:
+            return line
 
     def do_quit(self, line):
         """ Quit command to exit the program\n """
