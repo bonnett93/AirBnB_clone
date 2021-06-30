@@ -5,7 +5,7 @@
 import unittest
 from uuid import uuid4
 from datetime import datetime
-from models.base_model import BaseModel
+from models.base_model import BaseModel  
 from models.amenity import Amenity
 
 class TestAmenity(unittest.TestCase):
@@ -15,129 +15,158 @@ class TestAmenity(unittest.TestCase):
         self.obj = Amenity()
         self.obj2 = Amenity()
 
-    def testAmenityInstance(self):
+    def test_AmenityInstance(self):
         '''Check instance creation and attributes'''
         # Check id
-        self.assertIs(type(obj.id), str)
+        self.assertIs(type(self.obj.id), str)
         # Check created_at
-        self.assertIs(type(obj.created_at), datetime)
+        self.assertIs(type(self.obj.created_at), datetime)
         # Check updated_at
+        self.assertIs(type(self.obj.updated_at), datetime)
+
+    def test_attr_types(self):
+        """ Test for attributes types"""
+        self.assertIs(type(self.obj.id), str)
+        self.assertIs(type(self.obj.created_at), datetime)
+        self.assertIs(type(self.obj.updated_at), datetime)
+
+    def test_time_attrs(self):
+        """ Test for times attributes types"""
+        self.assertLess(self.obj.created_at, self.obj2.created_at)
+
+    def test__str__method(self):
+        """ Test for str method """
+        str_rep = "[{}] ({}) {}".format(
+                                        self.obj.__class__.__name__,
+                                        self.obj.id, self.obj.__dict__)
+        self.assertEqual(self.obj.__str__(), str_rep)
+
+    def test_to_dict_method(self):
+        """ Test for to_dict method """
+        from_dict = self.obj.__dict__
+        from_to_dict = self.obj.to_dict()
+        self.assertIs(type(from_to_dict), dict)
+        self.assertEqual(Amenity.__name__, from_to_dict['__class__'])
+        self.assertEqual(from_dict['id'], from_to_dict['id'])
+
+    def test_to_dict_method_with_one_param(self):
+        """ Test for to_dict method with arguments """
+        regex = 'takes 1 positional argument but 2 were given'
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict(None)
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict([])
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict([1, 2, 3])
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict({})
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict({1, 2, 3})
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict(True)
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict(False)
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict(dict())
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict({'id': 123, 'created_at': datetime.now()})
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.to_dict('Ranmod value')
+
+    def test_save_method(self):
+        """ Test for save method """
+        objid = self.obj.id
+        self.assertEqual(self.obj.id, objid)
+        self.obj.save()
+        self.assertEqual(self.obj.id, objid)
+        self.assertNotEqual(self.obj.created_at, self.obj.updated_at)
+        self.assertLess(self.obj.created_at, self.obj.updated_at)
+
+    def test_save_method_with_one_param(self):
+        """ Test for to_dict method with arguments"""
+        regex = 'takes 1 positional argument but 2 were given'
+        with self.assertRaisesRegex(TypeError, regex):
+            self.obj.save(None)
+            self.obj.save([])
+            self.obj.save([1, 2, 3])
+            self.obj.save({})
+            self.obj.save({1, 2, 3})
+            self.obj.save(True)
+            self.obj.save(False)
+            self.obj.save(dict())
+            self.obj.save({'id': 123, 'created_at': datetime.now()})
+            self.obj.save('Ranmod value')
+
+    def test_createamenety_from_dictionary_as_kwargs(self):
+        """ Test for create a obj from a dictionary """
+        id = str(uuid4())
+        now = datetime.now().isoformat()
+        my_dict = {
+            'id': id,
+            'name': 'Jhon Smith',
+            'created_at': now,
+            'updated_at': now
+        }
+        obj1 = Amenity(**my_dict)
+
+        self.assertEqual(obj1.id, id)
+        self.assertEqual(obj1.name, 'Jhon Smith')
+        self.assertEqual(now, obj1.created_at.isoformat())
+        self.assertEqual(now, obj1.updated_at.isoformat())
+
+    def test_createamenety_from_dictionary_as_kwargs_empty(self):
+        """ Test for create a obj from a empty dictionary """
+        empty_dict = dict()
+        obj1 = Amenity(**empty_dict)
+        self.assertIs(type(obj1), Amenity)
+        self.assertIs(type(obj1.id), str)
+        self.assertIs(type(obj1.created_at), datetime)
+        self.assertIs(type(obj1.updated_at), datetime)
+
+    def test_createamenety_from_dictionary_as_kwargs_diff_fileds(self):
+        """ Test for create a obj from a dictionary without all fields"""
+        my_dict = {
+            'name': 'Jhon Smith',
+            'age': 34
+        }
+        obj = Amenity(**my_dict)
+        self.assertEqual(obj.name, 'Jhon Smith')
+        self.assertEqual(obj.age, 34)
+        regex = "object has no attribute 'id'"
+        with self.assertRaisesRegex(AttributeError, regex):
+            obj.id
+        regex = "object has no attribute 'created_at'"
+        with self.assertRaisesRegex(AttributeError, regex):
+            obj.created_at
+        regex = "object has no attribute 'updated_at'"
+        with self.assertRaisesRegex(AttributeError, regex):
+            obj.updated_at
+
+    def test_createamenity_from_dictionary_as_kwargs_wrong_format(self):
+        """ Test for create a obj with wrong format """
+        id = uuid4()
+        now = datetime.now()
+        my_dict = {
+            'id': id,
+            'name': 'Jhon Smith',
+            'created_at': now,
+            'updated_at': now
+        }
+        regex = 'must be str, not datetime.datetime'
+        with self.assertRaisesRegex(TypeError, regex):
+            Amenity(**my_dict)
+
+    def test_createamenety_from_args(self):
+        """ Test for create a obj from a list """
+        args = [True, 'Random', 34.2]
+        obj = Amenity(*args)
+        self.assertIs(type(obj.id), str)
+        self.assertIs(type(obj.created_at), datetime)
         self.assertIs(type(obj.updated_at), datetime)
 
-        # Check new arguments
-        self.assertEqual(obj.width, 5)
-        # Check x
-        self.assertEqual(obj.x, 0)
-        # Check y
-        self.assertEqual(obj.y, 0)
-
-        # New instance, all arguments
-        r2 = Rectangle(5, 5, 5, 5, 5)
-        # Check height
-        self.assertEqual(r2.height, 5)
-        # Check width
-        self.assertEqual(r2.width, 5)
-        # Check x
-        self.assertEqual(r2.x, 5)
-        # Check y
-        self.assertEqual(r2.y, 5)
-        # Check id
-        self.assertEqual(r2.id, 5)
-
-    def testRectangleErrors(self):
-        '''Check wrong instance creation and attributes'''
-        # No arguments
-        with self.assertRaises(TypeError):
-            r = Rectangle()
-        # Wrong type argument height
-        with self.assertRaises(TypeError):
-            r = Rectangle(10, "2")
-        # Wrong value argument Width
-        with self.assertRaises(ValueError):
-            r = Rectangle(10, 2)
-            r.width = -10
-        # Wrong type argument x
-        with self.assertRaises(TypeError):
-            r = Rectangle(10, 2)
-            r.x = {}
-        # Wrong value argument y
-        with self.assertRaises(ValueError):
-            r = Rectangle(10, 2, 3, -1)
-
-    def test_area(self):
-        '''Check instance method area()'''
-        obj = Rectangle(3, 2)
-        self.assertEqual(obj.area(), 6)
-
-        r2 = Rectangle(2, 10)
-        self.assertEqual(r2.area(), 20)
-
-        r3 = Rectangle(8, 7, 0, 0, 12)
-        self.assertEqual(r3.area(), 56)
-
-        with self.assertRaises(TypeError):
-            r3.area(8)
-
-    def test_display(self):
-        '''Check instance method display()'''
-        # with No arguments
-        obj = Rectangle(4, 3)
-        self.assertEqual(obj.display(), None)
-
-        with self.assertRaises(TypeError):
-            obj.display(4)
-
-    def test_str(self):
-        '''Check instance method str'''
-        obj = Rectangle(4, 6, 2, 1, 12)
-        self.assertEqual(str(obj), "[Rectangle] (12) 2/1 - 4/6")
-
-    def test_update_args(self):
-        '''Check instance method update'''
-        obj = Rectangle(10, 10, 10, 10)
-        # No arguments
-        obj.update()
-        self.assertEqual(str(obj), "[Rectangle] (1) 10/10 - 10/10")
-        # one argument
-        obj.update(89)
-        self.assertEqual(str(obj), "[Rectangle] (89) 10/10 - 10/10")
-        # two arguments
-        obj.update(89, 2)
-        self.assertEqual(str(obj), "[Rectangle] (89) 10/10 - 2/10")
-        # three arguments
-        obj.update(89, 2, 3)
-        self.assertEqual(str(obj), "[Rectangle] (89) 10/10 - 2/3")
-        # four arguments
-        obj.update(89, 2, 3, 4)
-        self.assertEqual(str(obj), "[Rectangle] (89) 4/10 - 2/3")
-        # five arguments
-        obj.update(89, 2, 3, 4, 5)
-        self.assertEqual(str(obj), "[Rectangle] (89) 4/5 - 2/3")
-
-    def test_update_kwargs(self):
-        '''Check instance method update'''
-        obj = Rectangle(10, 10, 10, 10, 10)
-        # No arguments
-        obj.update()
-        self.assertEqual(str(obj), "[Rectangle] (10) 10/10 - 10/10")
-        # if args existx, ignore kwargs
-        obj.update(90, height=1)
-        self.assertEqual(str(obj), "[Rectangle] (90) 10/10 - 10/10")
-        # one argument
-        obj.update(height=1)
-        self.assertEqual(str(obj), "[Rectangle] (90) 10/10 - 10/1")
-        # two arguments
-        obj.update(width=1, x=2)
-        self.assertEqual(str(obj), "[Rectangle] (90) 2/10 - 1/1")
-        # more arguments
-        obj.update(y=1, width=2, x=3, id=89)
-        self.assertEqual(str(obj), "[Rectangle] (89) 3/1 - 2/1")
-        # and more
-        obj.update(x=1, height=2, y=3, width=4)
-        self.assertEqual(str(obj), "[Rectangle] (89) 1/3 - 4/2")
-        # Type Error
-        with self.assertRaises(TypeError):
-            obj.update(x="12")
-        # value error
-        with self.assertRaises(ValueError):
-            obj.update(width=-12)
+    def test_create_new_attrs(self):
+        """ Test for create a new obj attribute """
+        self.obj.name = 'Jhon'
+        self.obj.age = 46
+        self.assertEqual(self.obj.name, 'Jhon')
+        self.assertEqual(self.obj.age, 46)
