@@ -15,8 +15,6 @@ class TestBaseModel(unittest.TestCase):
         self.obj = BaseModel()
         self.obj2 = BaseModel()
 
-   
-
     def test_attr_types(self):
         self.assertIs(type(self.obj.id), str)
         self.assertIs(type(self.obj.created_at), datetime)
@@ -34,7 +32,6 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict_method(self):
         from_dict = self.obj.__dict__
         from_to_dict = self.obj.to_dict()
-
         self.assertIs(type(from_to_dict), dict)
         self.assertEqual(BaseModel.__name__, from_to_dict['__class__'])
         self.assertEqual(from_dict['id'], from_to_dict['id'])
@@ -65,9 +62,7 @@ class TestBaseModel(unittest.TestCase):
     def test_save_method(self):
         objid = self.obj.id
         self.assertEqual(self.obj.id, objid)
-    
         self.obj.save()
-
         self.assertEqual(self.obj.id, objid)
         self.assertNotEqual(self.obj.created_at, self.obj.updated_at)
         self.assertLess(self.obj.created_at, self.obj.updated_at)
@@ -105,7 +100,6 @@ class TestBaseModel(unittest.TestCase):
     def test_createBaseModel_from_dictionary_as_kwargs_empty(self):
         empty_dict = dict()
         obj1 = BaseModel(**empty_dict)
-        
         self.assertIs(type(obj1), BaseModel)
         self.assertIs(type(obj1.id), str)
         self.assertIs(type(obj1.created_at), datetime)
@@ -116,20 +110,15 @@ class TestBaseModel(unittest.TestCase):
             'name': 'Jhon Smith',
             'age': 34
         }
-
         obj = BaseModel(**my_dict)
-
         self.assertEqual(obj.name, 'Jhon Smith')
         self.assertEqual(obj.age, 34)
-
         regex = "object has no attribute 'id'"
         with self.assertRaisesRegex(AttributeError, regex):
             obj.id
-
         regex = "object has no attribute 'created_at'"
         with self.assertRaisesRegex(AttributeError, regex):
             obj.created_at
-
         regex = "object has no attribute 'updated_at'"
         with self.assertRaisesRegex(AttributeError, regex):
             obj.updated_at
@@ -143,7 +132,6 @@ class TestBaseModel(unittest.TestCase):
             'created_at': now,
             'updated_at': now
         }
-
         regex = 'must be str, not datetime.datetime'
         with self.assertRaisesRegex(TypeError, regex):
             BaseModel(**my_dict)
@@ -151,7 +139,6 @@ class TestBaseModel(unittest.TestCase):
     def test_createBaseModel_from_args(self):
         args = [True, 'Random', 34.2]
         obj = BaseModel(*args)
-
         self.assertIs(type(obj.id), str)
         self.assertIs(type(obj.created_at), datetime)
         self.assertIs(type(obj.updated_at), datetime)
@@ -159,13 +146,9 @@ class TestBaseModel(unittest.TestCase):
     def test_create_new_attrs(self):
         self.obj.name = 'Jhon'
         self.obj.age = 46
-
         self.assertEqual(self.obj.name, 'Jhon')
         self.assertEqual(self.obj.age, 46)
 
 
 if __name__ == '__main__':
     unittest.main()
-    
-    
-    
