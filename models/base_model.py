@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-	Module: models.base_model.py
+    Module: models.base_model.py
 """
 import uuid
 from datetime import datetime
@@ -17,15 +17,15 @@ class BaseModel:
             for key, value in kwargs.items():
                 if key == "__class__":
                     continue
-                elif key in ["created_at","updated_at"]:
-                    self.__dict__[key] = datetime.strptime(value,
-                                            '%Y-%m-%dT%H:%M:%S.%f')
+                elif key in ["created_at", "updated_at"]:
+                    self.__dict__[key] = datetime.strptime(
+                        value, '%Y-%m-%dT%H:%M:%S.%f')
                 else:
                     self.__dict__[key] = value
         else:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            self.updated_at  = datetime.now()
+            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self):
@@ -39,7 +39,7 @@ class BaseModel:
     def save(self):
         """ Updates the public instance attribute updated_at
             with the current datetime """
-        self.updated_at  = datetime.now() #Getter y Setter???
+        self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):

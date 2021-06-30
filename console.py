@@ -23,7 +23,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
         classes = ["BaseModel", "User", "State",
-                    "City", "Amenity", "Place", "Review"]
+                   "City", "Amenity", "Place", "Review"]
         if new_obj not in classes:
             print("** class doesn't exist **")
             return
@@ -33,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
         obj.save()
         print(obj.id)
 
-    def do_show (self, args):
+    def do_show(self, args):
         """ Prints the string representation of an instance
             based on the class name and id\n """
         if not args:
@@ -42,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         name_class = args[0]
         if name_class not in ["BaseModel", "User", "State",
-                            "City", "Amenity", "Place", "Review "]:
+                              "City", "Amenity", "Place", "Review"]:
             print("** class doesn't exist **")
             return
         if len(args) > 1:
@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         name_class = args[0]
         if name_class not in ["BaseModel", "User", "State",
-                            "City", "Amenity", "Place", "Review "]:
+                              "City", "Amenity", "Place", "Review"]:
             print("** class doesn't exist **")
             return
         if len(args) > 1:
@@ -95,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             if args not in ["BaseModel", "User", "State",
-                            "City", "Amenity", "Place", "Review "]:
+                            "City", "Amenity", "Place", "Review"]:
                 print("** class doesn't exist **")
                 return
             for obj in all_objs.values():
@@ -115,7 +115,7 @@ class HBNBCommand(cmd.Cmd):
         args = args.split()
         name_class = args[0]
         if name_class not in ["BaseModel", "User", "State",
-                            "City", "Amenity", "Place", "Review "]:
+                              "City", "Amenity", "Place", "Review"]:
             print("** class doesn't exist **")
             return
         if len(args) > 1:
@@ -163,7 +163,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
-        """"""
+        """ Handle empty lines"""
         return
 
 if __name__ == '__main__':
