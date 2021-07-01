@@ -114,6 +114,15 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
+        if "{" in args:
+            args = args.replace("{", "").replace("}", "").replace("'", "")
+            args = args.replace(":", "").split(",")
+            for element in range(1, len(args)):
+                go = self.do_update(args[0] + " " + args[element])
+                if go == -1:
+                    return
+            return
+        args = args.replace(',', '')
         args = args.split()
         name_class = args[0]
         if name_class not in ["BaseModel", "User", "State",
@@ -142,9 +151,10 @@ class HBNBCommand(cmd.Cmd):
                         return
         if not found:
             print("** no instance found **")
-            return
+            return (-1)
         attr_name = args[2]
         attr_value = args[3].replace('"', '')
+        # print("args_2:", args)
         if attr_value.isdigit():
             attr_value = int(attr_value)
         else:
@@ -172,7 +182,6 @@ class HBNBCommand(cmd.Cmd):
             line = line.replace("(", " ")
             line = line.replace(")", " ")
             line = line.replace(".", " ")
-            line = line.replace(",", "")
             line = line.split()
             command = line[1]
             args = line[0]
