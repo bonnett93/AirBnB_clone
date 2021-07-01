@@ -1,18 +1,16 @@
 #!/usr/bin/python3
-"""
-    Module: models.base_model.py
-"""
+'''Module: models.base_model.py'''
 import uuid
 from datetime import datetime
 import models
 
 
 class BaseModel:
-    """
-        BaseModel that defines all common attributes/methods for other classes
-    """
+    ''' BaseModel:
+        Defines all common attributes/methods for other classes
+    '''
     def __init__(self, *args, **kwargs):
-        """Class constructor of Base Model"""
+        '''Class constructor of Base Model'''
         if len(kwargs) != 0:
             for key, value in kwargs.items():
                 if key == "__class__":
@@ -29,7 +27,7 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        """Represents the class objects as a string"""
+        '''Represents the class objects as a string'''
         msg = "[{}] ({}) {}".format(
             self.__class__.__name__,
             self.id,
@@ -37,14 +35,14 @@ class BaseModel:
         return msg
 
     def save(self):
-        """ Updates the public instance attribute updated_at
-            with the current datetime """
+        ''' Updates the public instance attribute updated_at
+            with the current datetime '''
         self.updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
-        """ returns a dictionary containing all keys/values of
-            __dict__ of the instance """
+        ''' returns a dictionary containing all keys/values of
+            __dict__ of the instance '''
         dictionary = self.__dict__.copy()
         dictionary["__class__"] = self.__class__.__name__
         if "created_at" in dictionary:
