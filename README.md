@@ -11,15 +11,15 @@ We create the unittes to confirm the outputs of the instances we create through 
 # Description of files 
 # CONSOLE
 Console.py is a command interpreter in which we can create different objects, the commands contained in this interpreter are:
-> - do_EOF () : exit the program by typing Ctrl + d.
-> - empty line () : an empty line + ENTER does not execute anything.
-> - do_quit () : exits the program.
-> - do_create () : creates a new instance of a specific class and saves it (in the JSON file).
-> - do_show () : prints the string representation of an instance based on the class name and id.
-> - do_destroy () : deletes an instance based on the class name and id.
-> - do_all () : shows all instances that are located in the .json file based on the class name or not.
-> - do_update () : update an instance based on the class name and ID by adding or updating an attribute
-> -do_clear () : clears the console.
+> - [do_EOF](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : exit the program by typing Ctrl + d.
+> - [empty line](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : an empty line + ENTER does not execute anything.
+> - [do_quit](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : exits the program.
+> - [do_create](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : creates a new instance of a specific class and saves it (in the JSON file).
+> - [do_show](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : prints the string representation of an instance based on the class name and id.
+> - [do_destroy](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : deletes an instance based on the class name and id.
+> - [do_all](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : shows all instances that are located in the .json file based on the class name or not.
+> - [do_update](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : update an instance based on the class name and ID by adding or updating an attribute
+> - [do_clear](https://github.com/bonnett93/AirBnB_clone/blob/main/console.py) () : clears the console.
 
 # REQUIREMENTS 
 AirBnB is designed to run in the Ubuntu 14.04 LTS linux, python3 (version3.4.3), you must be able to run python scripts, if you cannot run them contact the administrator for the appropriate permissions
