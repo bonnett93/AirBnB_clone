@@ -1,4 +1,6 @@
 # AirBnB CLONE - THE CONSOLE 
+		![image](https://user-images.githubusercontent.com/70826697/124161186-b8fa6580-da62-11eb-98d7-1334a4128822.png)
+
 
 Hello! in this repository we are developing the Airb&b clone by means of Python, let's start with this fascinating journey:
 
