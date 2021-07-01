@@ -11,14 +11,13 @@ from models.city import City
 
 class TestCity(unittest.TestCase):
     """" Unitest cases for City class """
-    
-    """" Unitest cases for Amenity class """
+
     def setUp(self) -> None:
         super().setUp()
         self.obj = City()
         self.obj2 = City()
 
-    def test_AmenityInstance(self):
+    def test_CityInstance(self):
         '''Check instance creation and attributes'''
         # Check id
         self.assertIs(type(self.obj.id), str)
@@ -100,7 +99,7 @@ class TestCity(unittest.TestCase):
             self.obj.save({'id': 123, 'created_at': datetime.now()})
             self.obj.save('Ranmod value')
 
-    def test_createamenety_from_dictionary_as_kwargs(self):
+    def test_createCity_from_dictionary_as_kwargs(self):
         """ Test for create a obj from a dictionary """
         id = str(uuid4())
         now = datetime.now().isoformat()
@@ -117,7 +116,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(now, obj1.created_at.isoformat())
         self.assertEqual(now, obj1.updated_at.isoformat())
 
-    def test_createamenety_from_dictionary_as_kwargs_empty(self):
+    def test_createCity_from_dictionary_as_kwargs_empty(self):
         """ Test for create a obj from a empty dictionary """
         empty_dict = dict()
         obj1 = City(**empty_dict)
@@ -126,7 +125,7 @@ class TestCity(unittest.TestCase):
         self.assertIs(type(obj1.created_at), datetime)
         self.assertIs(type(obj1.updated_at), datetime)
 
-    def test_createamenety_from_dictionary_as_kwargs_diff_fileds(self):
+    def test_createCity_from_dictionary_as_kwargs_diff_fileds(self):
         """ Test for create a obj from a dictionary without all fields"""
         my_dict = {
             'name': 'Jhon Smith',
@@ -145,7 +144,7 @@ class TestCity(unittest.TestCase):
         with self.assertRaisesRegex(AttributeError, regex):
             obj.updated_at
 
-    def test_createamenity_from_dictionary_as_kwargs_wrong_format(self):
+    def test_createCity_from_dictionary_as_kwargs_wrong_format(self):
         """ Test for create a obj with wrong format """
         id = uuid4()
         now = datetime.now()
@@ -159,7 +158,7 @@ class TestCity(unittest.TestCase):
         with self.assertRaisesRegex(TypeError, regex):
             City(**my_dict)
 
-    def test_createamenety_from_args(self):
+    def test_createCity_from_args(self):
         """ Test for create a obj from a list """
         args = [True, 'Random', 34.2]
         obj = City(*args)

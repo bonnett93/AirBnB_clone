@@ -12,7 +12,7 @@ from models.review import Review
 
 class TestReview(unittest.TestCase):
     """" Unitest cases for Review class """
-    
+
     def setUp(self) -> None:
         super().setUp()
         self.obj = Review()
