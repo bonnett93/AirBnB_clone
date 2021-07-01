@@ -1,4 +1,4 @@
-# # AirBnB clone - The console
+## AirBnB CLONE - THE CONSOLE 
 
 Hello! in this repository we are developing the Airb&b clone by means of Python, let's start with this fascinating journey:
 
@@ -9,11 +9,7 @@ We create all the necessary classes to introduce and to handle the user's data l
 We create the unittes to confirm the outputs of the instances we create through our class.
 
 # Description of files 
-Jordan Bonnet and Julio C arenas contributed to the development of the Airb&B project.
-
-
-
- ## CONSOLE
+# CONSOLE
 Console.py is a command interpreter in which we can create different objects, the commands contained in this interpreter are:
 > - do_EOF () : exit the program by typing Ctrl + d.
 > - empty line () : an empty line + ENTER does not execute anything.
@@ -24,6 +20,23 @@ Console.py is a command interpreter in which we can create different objects, th
 > - do_all () : shows all instances that are located in the .json file based on the class name or not.
 > - do_update () : update an instance based on the class name and ID by adding or updating an attribute
 > -do_clear () : clears the console.
+
+# REQUIREMENTS 
+AirBnB is designed to run in the Ubuntu 14.04 LTS linux, python3 (version3.4.3), you must be able to run python scripts, if you cannot run them contact the administrator for the appropriate permissions
+
+# EXAMPLE OF USE
+Run
+
+![image](https://user-images.githubusercontent.com/70826697/124070744-ec59d780-da03-11eb-87a5-fdf7f6cc9b4b.png)
+
+Use Help
+
+![image](https://user-images.githubusercontent.com/70826697/124070848-1612fe80-da04-11eb-8baf-41975afcf3e8.png)
+
+
+Creates a new instance of BaseModel
+
+![image](https://user-images.githubusercontent.com/70826697/124070913-3773ea80-da04-11eb-8446-83ed6efff695.png)
 
 
 
@@ -43,8 +56,10 @@ Console.py is a command interpreter in which we can create different objects, th
 **![](https://lh5.googleusercontent.com/vDYYzino6J4-Ve84YPMsJXpx587Uf5sZ7ZLTXVrcW7K4Oj5lfQUH2hB84wSLDn9QgiFj2PBGHRpcdImHPQiXf1OaDdgvacTZ_tGbwGKFSZ6nU0snjw_konyz9jLEP4z921s27djZ)**
 
 ## AUTHOR
-- Jordan bonnett
-- Julio C Arenas
+* Jordan bonnett
+<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=bonnett93&layout=compact&theme=vue&langs_count=6" alt="My github stats"/>
+* Julio C Arenas 
+<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=jihuder&layout=compact&theme=vue&langs_count=6" alt="My github stats"/>
 
 
 ## UML diagrams
