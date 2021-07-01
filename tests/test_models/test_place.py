@@ -11,13 +11,13 @@ from models.base_model import BaseModel
 
 class TestPlace(unittest.TestCase):
     """" Unitest cases for Place class """
-    
+
     def setUp(self) -> None:
         super().setUp()
         self.obj = Place()
         self.obj2 = Place()
 
-    def test_AmenityInstance(self):
+    def test_PlaceInstance(self):
         '''Check instance creation and attributes'''
         # Check id
         self.assertIs(type(self.obj.id), str)
@@ -99,7 +99,7 @@ class TestPlace(unittest.TestCase):
             self.obj.save({'id': 123, 'created_at': datetime.now()})
             self.obj.save('Ranmod value')
 
-    def test_createamenety_from_dictionary_as_kwargs(self):
+    def test_createPlace_from_dictionary_as_kwargs(self):
         """ Test for create a obj from a dictionary """
         id = str(uuid4())
         now = datetime.now().isoformat()
@@ -116,7 +116,7 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(now, obj1.created_at.isoformat())
         self.assertEqual(now, obj1.updated_at.isoformat())
 
-    def test_createamenety_from_dictionary_as_kwargs_empty(self):
+    def test_createPlace_from_dictionary_as_kwargs_empty(self):
         """ Test for create a obj from a empty dictionary """
         empty_dict = dict()
         obj1 = Place(**empty_dict)
@@ -125,7 +125,7 @@ class TestPlace(unittest.TestCase):
         self.assertIs(type(obj1.created_at), datetime)
         self.assertIs(type(obj1.updated_at), datetime)
 
-    def test_createamenety_from_dictionary_as_kwargs_diff_fileds(self):
+    def test_createPlace_from_dictionary_as_kwargs_diff_fileds(self):
         """ Test for create a obj from a dictionary without all fields"""
         my_dict = {
             'name': 'Jhon Smith',
@@ -144,7 +144,7 @@ class TestPlace(unittest.TestCase):
         with self.assertRaisesRegex(AttributeError, regex):
             obj.updated_at
 
-    def test_createamenity_from_dictionary_as_kwargs_wrong_format(self):
+    def test_createPlace_from_dictionary_as_kwargs_wrong_format(self):
         """ Test for create a obj with wrong format """
         id = uuid4()
         now = datetime.now()
@@ -158,7 +158,7 @@ class TestPlace(unittest.TestCase):
         with self.assertRaisesRegex(TypeError, regex):
             Place(**my_dict)
 
-    def test_createamenety_from_args(self):
+    def test_createPlace_from_args(self):
         """ Test for create a obj from a list """
         args = [True, 'Random', 34.2]
         obj = Place(*args)
@@ -172,4 +172,3 @@ class TestPlace(unittest.TestCase):
         self.obj.age = 46
         self.assertEqual(self.obj.name, 'Jhon')
         self.assertEqual(self.obj.age, 46)
-

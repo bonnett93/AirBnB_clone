@@ -5,8 +5,9 @@
 import unittest
 from uuid import uuid4
 from datetime import datetime
-from models.base_model import BaseModel  
+from models.base_model import BaseModel
 from models.amenity import Amenity
+
 
 class TestAmenity(unittest.TestCase):
     """" Unitest cases for Amenity class """

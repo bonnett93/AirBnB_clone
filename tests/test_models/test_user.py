@@ -9,8 +9,10 @@ from models import user
 from models.base_model import BaseModel
 from models.user import User
 
+
 class TestUser(unittest.TestCase):
     """" Unitest cases for User class """
+
     def setUp(self) -> None:
         super().setUp()
         self.obj = User()
@@ -171,4 +173,3 @@ class TestUser(unittest.TestCase):
         self.obj.age = 46
         self.assertEqual(self.obj.name, 'Jhon')
         self.assertEqual(self.obj.age, 46)
-
