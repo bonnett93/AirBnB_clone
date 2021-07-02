@@ -14,18 +14,18 @@ This project consists of several stages, together they will simulate the backend
 1. The first steps was to create the directories to contain our modules and convert them into a single package, the estructure is the next one:
 
 	> + AirBnB_clone
-	 * /models
-	   *  /engine
-		 * init.py
-		 * file_storage.py
-	   + init.py
-	   + base_model.py
-	   + user.py
-	   + state.py
-	   + place.py
-	   + amenity.py
-	   + review.py
-	 + console.py
+	> * /models
+	>   *  /engine
+	>	 * init.py
+	>	 * file_storage.py
+	>   + init.py
+	>   + base_model.py
+	>   + user.py
+	>   + state.py
+	>   + place.py
+	>   + amenity.py
+	>   + review.py
+	> + console.py
 
 2. The **BaseModel** class is the principal of other, all other classes will inherit it's functions, attributes and methods.  We create all the necessary classes to introduce and to handle the data: User, State, City, Place, Review and Amenity.
 
